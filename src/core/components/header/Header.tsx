@@ -1,0 +1,16 @@
+import { ReactNode } from "react";
+import "./header.css";
+import logo from "../../../assets/logo.png";
+
+const Header = (): ReactNode => {
+  return (
+    <header>
+      <div className="header">
+        <img src={logo} alt="Logo" />
+        <p>To Do List</p>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
