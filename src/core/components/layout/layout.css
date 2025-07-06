@@ -3,14 +3,14 @@
 }
 
 .layout header {
-  height: 4rem;
+  height: var(--spacing-header-height);
   background-color: var(--color-gray-100);
   border-bottom: 1px solid var(--color-border-primary);
 }
 
 .layout main {
-  padding: 2rem 0;
-  max-width: 60rem;
+  padding: var(--spacing-2xl) 0;
+  max-width: var(--spacing-layout-max-width);
   margin: 0 auto;
   overflow-y: auto;
 }

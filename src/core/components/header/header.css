@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  max-width: 60rem;
+  max-width: var(--spacing-layout-max-width);
   margin: 0 auto;
   height: 100%;
 }

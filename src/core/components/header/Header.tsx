@@ -7,7 +7,7 @@ const Header = (): ReactNode => {
     <header>
       <div className="header">
         <img src={logo} alt="Logo" />
-        <p>To Do List</p>
+        <p>List APP</p>
       </div>
     </header>
   );

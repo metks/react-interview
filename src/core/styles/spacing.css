@@ -1,0 +1,43 @@
+:root {
+  /* Base spacing unit */
+  --spacing-unit: 0.25rem; /* 4px */
+
+  /* Spacing scale */
+  --spacing-xs: calc(var(--spacing-unit) * 1); /* 4px */
+  --spacing-sm: calc(var(--spacing-unit) * 2); /* 8px */
+  --spacing-md: calc(var(--spacing-unit) * 3); /* 12px */
+  --spacing-lg: calc(var(--spacing-unit) * 4); /* 16px */
+  --spacing-xl: calc(var(--spacing-unit) * 6); /* 24px */
+  --spacing-2xl: calc(var(--spacing-unit) * 8); /* 32px */
+  --spacing-3xl: calc(var(--spacing-unit) * 12); /* 48px */
+  --spacing-4xl: calc(var(--spacing-unit) * 16); /* 64px */
+  --spacing-5xl: calc(var(--spacing-unit) * 20); /* 80px */
+  --spacing-6xl: calc(var(--spacing-unit) * 24); /* 96px */
+
+  /* Semantic spacing */
+  --spacing-component-gap: var(--spacing-lg); /* 16px */
+  --spacing-section-gap: var(--spacing-2xl); /* 32px */
+  --spacing-page-gap: var(--spacing-3xl); /* 48px */
+
+  /* Container spacing */
+  --spacing-container-padding: var(--spacing-lg); /* 16px */
+  --spacing-container-margin: var(--spacing-xl); /* 24px */
+
+  /* Form spacing */
+  --spacing-form-gap: var(--spacing-lg); /* 16px */
+  --spacing-input-padding: var(--spacing-md); /* 12px */
+  --spacing-button-padding-x: var(--spacing-xl); /* 24px */
+  --spacing-button-padding-y: var(--spacing-md); /* 12px */
+
+  /* Card spacing */
+  --spacing-card-padding: var(--spacing-xl); /* 24px */
+  --spacing-card-gap: var(--spacing-lg); /* 16px */
+
+  /* Header spacing */
+  --spacing-header-padding: var(--spacing-lg); /* 16px */
+  --spacing-header-height: 4rem; /* 64px */
+
+  /* Layout spacing */
+  --spacing-layout-max-width: 60rem; /* 960px */
+  --spacing-layout-padding: var(--spacing-lg); /* 16px */
+}
