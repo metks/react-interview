@@ -1,14 +1,20 @@
 import "./primary-button.css";
 
-interface PrimaryButtonProps {
+interface PrimaryButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
 }
 
-const PrimaryButton = ({ children, onClick, disabled }: PrimaryButtonProps) => {
+const PrimaryButton = ({
+  children,
+  onClick,
+  disabled,
+  ...rest
+}: PrimaryButtonProps) => {
   return (
-    <button onClick={onClick} disabled={disabled}>
+    <button onClick={onClick} disabled={disabled} {...rest}>
       {children}
     </button>
   );

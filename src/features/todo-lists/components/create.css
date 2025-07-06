@@ -1,0 +1,52 @@
+.create-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-radius: var(--spacing-xs);
+  background-color: var(--color-bg-primary);
+  min-width: 20rem;
+}
+
+.create-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.create-form {
+  padding: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.create-form h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.create-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+}
+
+.cancel-button {
+  padding: var(--spacing-button-padding-y) var(--spacing-button-padding-x);
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border-secondary);
+  border-radius: var(--spacing-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-button:hover {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
