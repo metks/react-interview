@@ -43,7 +43,18 @@ export class ApiClient {
         throw error;
       }
 
-      const data = await response.json();
+      // Handle empty responses (like DELETE operations)
+      const contentType = response.headers.get("content-type");
+      let data;
+
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        // For operations like DELETE that might not return JSON
+        const text = await response.text();
+        data = text ? JSON.parse(text) : null;
+      }
+
       return {
         success: true,
         data,

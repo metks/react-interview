@@ -135,9 +135,9 @@ export function useMutation<T, TVariables = unknown>(
     try {
       const response = await mutationFnRef.current(variables);
 
-      if (response.success && response.data) {
+      if (response.success) {
         setState({
-          data: response.data,
+          data: response.data ?? null,
           loading: false,
           error: null,
         });
