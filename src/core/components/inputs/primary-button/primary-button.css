@@ -1,6 +1,5 @@
 button {
   padding: var(--spacing-button-padding-y) var(--spacing-button-padding-x);
-  padding-left: var(--spacing-md);
   background-color: var(--color-primary);
   color: var(--color-white);
   border-radius: var(--spacing-xs);
@@ -10,6 +9,13 @@ button {
   align-items: center;
   gap: var(--spacing-md);
   justify-content: center;
+
+  .icon {
+    margin-left: calc(var(--spacing-sm) * -1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   &:hover {
     background-color: var(--color-primary-light);

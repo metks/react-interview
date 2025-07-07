@@ -43,8 +43,7 @@ const Create = ({ onCreate }: CreateButtonProps) => {
 
   return (
     <>
-      <PrimaryButton onClick={handleClick}>
-        <PlusIcon />
+      <PrimaryButton onClick={handleClick} icon={<PlusIcon />}>
         Create
       </PrimaryButton>
       <dialog ref={dialogRef} className="create-dialog">

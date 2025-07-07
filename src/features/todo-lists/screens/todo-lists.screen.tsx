@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Layout from "../../../core/components/layout/Layout";
 import Create from "../components/Create";
 import { useCreateTodoList, useTodoLists } from "../../../core/api/hooks";
+import "./styles.css";
 
 const TodoListsScreen = (): ReactNode => {
   const { data, loading, execute: refetchLists } = useTodoLists();
@@ -17,7 +18,7 @@ const TodoListsScreen = (): ReactNode => {
 
   return (
     <Layout>
-      <div>
+      <div className="container">
         <h1>Todo Lists</h1>
         <Create onCreate={handleCreate} />
       </div>
