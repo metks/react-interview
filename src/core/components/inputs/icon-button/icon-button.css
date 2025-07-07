@@ -1,0 +1,9 @@
+.icon-button {
+  border-radius: 50%;
+  background-color: #fff;
+  width: 1.5rem;
+
+  &:hover {
+    background-color: var(--color-gray-200);
+  }
+}

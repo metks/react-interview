@@ -1,0 +1,66 @@
+.todo-list-table {
+  width: 100%;
+  border-radius: var(--spacing-xs);
+  overflow: hidden;
+  margin: var(--spacing-2xl) 0;
+}
+
+.todo-list-table thead {
+  background: var(--color-primary);
+  color: white;
+}
+
+.todo-list-table th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.todo-list-table tbody tr {
+  border-bottom: 1px solid var(--color-gray-200);
+  transition: all 0.2s ease;
+}
+
+.todo-list-table tbody tr:hover {
+  background-color: var(--color-gray-100);
+}
+
+.todo-list-table td {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  font-size: 14px;
+  color: #374151;
+}
+
+.todo-list-table .items-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 24px;
+  height: 24px;
+}
+
+.todo-list-table .no-data {
+  text-align: center;
+  color: #9ca3af;
+  font-style: italic;
+  padding: 40px 20px;
+}
+
+.todo-list-table .list-name {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.todo-list-table .actions-cell {
+  text-align: center;
+  width: 80px;
+}

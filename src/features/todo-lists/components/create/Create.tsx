@@ -1,8 +1,8 @@
 import { useRef } from "react";
-import PlusIcon from "../../../assets/icons/Plus.icon";
-import PrimaryButton from "../../../core/components/inputs/primary-button/PrimaryButton";
 import "./create.css";
-import TextField from "../../../core/components/inputs/text-field/TextField";
+import PrimaryButton from "../../../../core/components/inputs/primary-button/PrimaryButton";
+import TextField from "../../../../core/components/inputs/text-field/TextField";
+import PlusIcon from "../../../../assets/icons/Plus.icon";
 
 interface CreateButtonProps {
   onCreate: (listName: string) => void;
