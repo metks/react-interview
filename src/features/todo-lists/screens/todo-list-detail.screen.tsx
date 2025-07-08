@@ -35,6 +35,7 @@ const TodoListDetailScreen = (): ReactNode => {
     updateTodoList({
       id: todoList.id,
       data: {
+        name: todoList.name,
         items: [
           ...todoList.items,
           { id: id, name: itemName, completed: false, listId: todoList.id },
