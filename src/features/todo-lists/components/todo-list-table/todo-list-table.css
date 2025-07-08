@@ -29,7 +29,7 @@
 }
 
 .todo-list-table td {
-  padding: var(--spacing-lg) var(--spacing-xl);
+  padding: var(--spacing-sm) var(--spacing-xl);
   font-size: 14px;
   color: #374151;
 }

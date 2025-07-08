@@ -1,11 +1,11 @@
+import {
+  CreateTodoListDto,
+  TodoList,
+  UpdateTodoListDto,
+} from "../../models/todo-list";
 import { apiClient } from "../client";
 import { API_ENDPOINTS } from "../config";
-import type {
-  TodoList,
-  CreateTodoListDto,
-  UpdateTodoListDto,
-  ApiResponse,
-} from "../types";
+import type { ApiResponse } from "../types";
 
 export class TodoListService {
   async getAll(): Promise<ApiResponse<TodoList[]>> {

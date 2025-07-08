@@ -1,6 +1,6 @@
 import { useApi, useMutation } from "./useApi";
 import { todoListService } from "../services/todo-list.service";
-import type { CreateTodoListDto, UpdateTodoListDto } from "../types";
+import { CreateTodoListDto, UpdateTodoListDto } from "../../models/todo-list";
 
 // Hook para obtener todas las listas
 export function useTodoLists() {

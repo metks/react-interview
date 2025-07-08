@@ -1,11 +1,11 @@
+import {
+  CreateTodoListItemDto,
+  TodoListItem,
+  UpdateTodoListItemDto,
+} from "../../models/todo-list-item";
 import { apiClient } from "../client";
 import { API_ENDPOINTS } from "../config";
-import type {
-  TodoListItem,
-  CreateTodoListItemDto,
-  UpdateTodoListItemDto,
-  ApiResponse,
-} from "../types";
+import type { ApiResponse } from "../types";
 
 export class TodoListItemService {
   async create(
