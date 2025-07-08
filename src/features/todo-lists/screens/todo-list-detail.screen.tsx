@@ -1,13 +1,16 @@
 import { ReactNode, useState } from "react";
 import Layout from "../../../core/components/layout/Layout";
 import { useTodoList, useUpdateTodoList } from "../../../core/api/hooks";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PrimaryButton from "../../../core/components/inputs/primary-button/PrimaryButton";
 import AddItemModal from "../components/update/add-item-modal/AddItemModal";
 import { v4 as uuidv4 } from "uuid";
+import IconButton from "../../../core/components/inputs/icon-button/IconButton";
+import { LeftArrowIcon } from "../../../assets/icons";
 
 const TodoListDetailScreen = (): ReactNode => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!id) {
@@ -50,7 +53,15 @@ const TodoListDetailScreen = (): ReactNode => {
   return (
     <Layout>
       <div className="container">
-        <h1>{todoList.name}</h1>
+        <div className="container">
+          <IconButton
+            onClick={() => navigate(-1)}
+            icon={<LeftArrowIcon color="#000" width="1.5rem" height="1.5rem" />}
+            label="Back"
+          />
+
+          <h1>{todoList.name}</h1>
+        </div>
         <PrimaryButton onClick={handleAddItem}>Add item</PrimaryButton>
       </div>
 
