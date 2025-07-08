@@ -8,14 +8,14 @@ import { TodoList } from "../../../../core/models/todo-list";
 
 interface TodoListTableProps {
   list: TodoList[];
-  onDelete?: (id: number) => void;
+  onDelete?: (id: string) => void;
 }
 
 const TodoListTable = ({ list, onDelete }: TodoListTableProps): ReactNode => {
   const navigate = useNavigate();
 
-  const handleRowClick = (listId: number) => {
-    navigate(ROUTES.LIST_DETAIL.replace(":id", listId.toString()));
+  const handleRowClick = (listId: string) => {
+    navigate(ROUTES.LIST_DETAIL.replace(":id", listId));
   };
 
   return (

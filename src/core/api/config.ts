@@ -12,8 +12,8 @@ export const API_ENDPOINTS = {
     getAll: "/api/todolists",
     create: "/api/todolists",
     getById: (id: number) => `/api/todolists/${id}`,
-    update: (id: number) => `/api/todolists/${id}`,
-    delete: (id: number) => `/api/todolists/${id}`,
+    update: (id: string) => `/api/todolists/${id}`,
+    delete: (id: string) => `/api/todolists/${id}`,
   },
 
   // Todo List Items

@@ -1,10 +1,10 @@
 import { ReactNode, useState } from "react";
 import Layout from "../../../core/components/layout/Layout";
-import { useTodoList } from "../../../core/api/hooks";
-import { useCreateTodoListItem } from "../../../core/api/hooks";
+import { useTodoList, useUpdateTodoList } from "../../../core/api/hooks";
 import { useParams } from "react-router-dom";
 import PrimaryButton from "../../../core/components/inputs/primary-button/PrimaryButton";
 import AddItemModal from "../components/update/add-item-modal/AddItemModal";
+import { v4 as uuidv4 } from "uuid";
 
 const TodoListDetailScreen = (): ReactNode => {
   const { id } = useParams<{ id: string }>();
@@ -15,10 +15,9 @@ const TodoListDetailScreen = (): ReactNode => {
   }
 
   const { data: todoList, execute: refetchTodoList } = useTodoList(Number(id));
-  const { mutate: createItem, loading: isCreating } = useCreateTodoListItem({
+  const { mutate: updateTodoList } = useUpdateTodoList({
     onSuccess: () => {
       refetchTodoList();
-      setIsModalOpen(false);
     },
   });
 
@@ -31,9 +30,16 @@ const TodoListDetailScreen = (): ReactNode => {
   };
 
   const handleCreateItem = (itemName: string) => {
-    createItem({
-      name: itemName,
-      listId: todoList.id,
+    const id = uuidv4();
+
+    updateTodoList({
+      id: todoList.id,
+      data: {
+        items: [
+          ...todoList.items,
+          { id: id, name: itemName, completed: false, listId: todoList.id },
+        ],
+      },
     });
   };
 
@@ -63,7 +69,6 @@ const TodoListDetailScreen = (): ReactNode => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onSubmit={handleCreateItem}
-        loading={isCreating}
       />
     </Layout>
   );

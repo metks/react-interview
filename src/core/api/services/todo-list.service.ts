@@ -21,13 +21,13 @@ export class TodoListService {
   }
 
   async update(
-    id: number,
+    id: string,
     data: UpdateTodoListDto
   ): Promise<ApiResponse<TodoList>> {
     return apiClient.put<TodoList>(API_ENDPOINTS.todoLists.update(id), data);
   }
 
-  async delete(id: number): Promise<ApiResponse<void>> {
+  async delete(id: string): Promise<ApiResponse<void>> {
     return apiClient.delete<void>(API_ENDPOINTS.todoLists.delete(id));
   }
 }

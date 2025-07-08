@@ -6,16 +6,9 @@ interface ModalProps {
   onClose: () => void;
   title?: string;
   children: ReactNode;
-  size?: "small" | "medium" | "large";
 }
 
-const Modal = ({
-  isOpen,
-  onClose,
-  title,
-  children,
-  size = "medium",
-}: ModalProps): ReactNode => {
+const Modal = ({ isOpen, onClose, title, children }: ModalProps): ReactNode => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -55,10 +48,7 @@ const Modal = ({
   };
 
   return (
-    <dialog
-      ref={dialogRef}
-      className={`modal modal-${size}`}
-      onClick={handleBackdropClick}>
+    <dialog ref={dialogRef} className={`modal`} onClick={handleBackdropClick}>
       <div className="modal-content">
         {title && (
           <div className="modal-header">

@@ -26,7 +26,7 @@ const TodoListsScreen = (): ReactNode => {
     createList({ name: listName });
   };
 
-  const handleDelete = (listId: number) => {
+  const handleDelete = (listId: string) => {
     deleteList(listId);
   };
 

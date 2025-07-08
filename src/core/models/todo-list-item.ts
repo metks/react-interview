@@ -1,13 +1,13 @@
 export interface TodoListItem {
-  id: number;
-  listId: number;
+  id: string;
+  listId: string;
   name: string;
   completed: boolean;
 }
 
 export interface CreateTodoListItemDto {
   name: string;
-  listId: number;
+  listId: string;
 }
 
 export type UpdateTodoListItemDto = Partial<TodoListItem>;

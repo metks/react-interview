@@ -34,7 +34,7 @@ export function useUpdateTodoList(options?: {
   onError?: (error: unknown) => void;
 }) {
   return useMutation(
-    ({ id, data }: { id: number; data: UpdateTodoListDto }) =>
+    ({ id, data }: { id: string; data: UpdateTodoListDto }) =>
       todoListService.update(id, data),
     {
       onSuccess: options?.onSuccess,
@@ -48,7 +48,7 @@ export function useDeleteTodoList(options?: {
   onSuccess?: () => void;
   onError?: (error: unknown) => void;
 }) {
-  return useMutation((id: number) => todoListService.delete(id), {
+  return useMutation((id: string) => todoListService.delete(id), {
     onSuccess: options?.onSuccess,
     onError: options?.onError,
   });

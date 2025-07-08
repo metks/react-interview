@@ -37,11 +37,7 @@ const AddItemModal = ({
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={handleClose}
-      title="Add New Item"
-      size="small">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Add New Item">
       <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
         <TextField
           placeholder="Enter item name"
