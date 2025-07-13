@@ -29,7 +29,7 @@ const TodoListTable = ({ list, onDelete }: TodoListTableProps): ReactNode => {
       </thead>
       <tbody>
         {list.length === 0 && (
-          <tr>
+          <tr className="no-data">
             <td colSpan={3} className="no-data">
               No todo lists found
             </td>

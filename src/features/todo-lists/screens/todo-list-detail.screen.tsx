@@ -7,6 +7,7 @@ import AddItemModal from "../components/update/add-item-modal/AddItemModal";
 import { v4 as uuidv4 } from "uuid";
 import IconButton from "../../../core/components/inputs/icon-button/IconButton";
 import { LeftArrowIcon } from "../../../assets/icons";
+import ListItem from "../components/list-item/LIstItem";
 
 const TodoListDetailScreen = (): ReactNode => {
   const { id } = useParams<{ id: string }>();
@@ -47,12 +48,26 @@ const TodoListDetailScreen = (): ReactNode => {
     });
   };
 
+  const handleToggleComplete = (itemId: string) => {
+    const updatedItems = todoList.items.map((item) =>
+      item.id === itemId ? { ...item, completed: !item.completed } : item
+    );
+
+    updateTodoList({
+      id: todoList.id,
+      data: {
+        name: todoList.name,
+        items: updatedItems,
+      },
+    });
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
   return (
     <Layout>
-      <div className="container">
+      <div className="header-container">
         <div className="container">
           <IconButton
             onClick={() => navigate(-1)}
@@ -66,15 +81,57 @@ const TodoListDetailScreen = (): ReactNode => {
       </div>
 
       {todoList.items.length === 0 ? (
-        <div>No items in this list</div>
+        <div style={{ padding: "0 var(--spacing-xl)" }}>
+          <h2
+            style={{
+              marginBottom: "var(--spacing-lg)",
+              color: "var(--color-text-primary)",
+            }}>
+            Items
+          </h2>
+          <table className="list-items-table">
+            <thead>
+              <tr>
+                <th>Completed</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="no-data">
+                <td colSpan={2} className="no-data">
+                  No items in this list
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       ) : (
-        <ul>
-          {todoList.items.map((item) => (
-            <li key={item.id}>
-              {item.name} - {item.completed ? "Completed" : "Pending"}
-            </li>
-          ))}
-        </ul>
+        <div style={{ padding: "0 var(--spacing-xl)" }}>
+          <h2
+            style={{
+              marginBottom: "var(--spacing-lg)",
+              color: "var(--color-text-primary)",
+            }}>
+            Items
+          </h2>
+          <table className="list-items-table">
+            <thead>
+              <tr>
+                <th>Completed</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {todoList.items.map((item) => (
+                <ListItem
+                  key={item.id}
+                  item={item}
+                  onToggleComplete={handleToggleComplete}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       <AddItemModal

@@ -7,7 +7,7 @@
 
 .todo-list-table thead {
   background: var(--color-primary);
-  color: white;
+  color: var(--color-white);
 }
 
 .todo-list-table th {
@@ -20,47 +20,51 @@
 }
 
 .todo-list-table tbody tr {
-  border-bottom: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid var(--color-border-primary);
   transition: all 0.2s ease;
 }
 
 .todo-list-table tbody tr:hover {
-  background-color: var(--color-gray-100);
+  background-color: var(--color-bg-secondary);
 }
 
 .todo-list-table td {
-  padding: var(--spacing-sm) var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-xl);
   font-size: 14px;
-  color: #374151;
+  color: var(--color-text-primary);
 }
 
 .todo-list-table .items-count {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-  color: white;
-  padding: 4px 12px;
-  border-radius: 20px;
+  background: var(--color-success);
+  color: var(--color-white);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--spacing-lg);
   font-size: 12px;
   font-weight: 600;
-  min-width: 24px;
-  height: 24px;
+  min-width: var(--spacing-xl);
+  height: var(--spacing-xl);
 }
 
 .todo-list-table .no-data {
   text-align: center;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   font-style: italic;
-  padding: 40px 20px;
+  padding: var(--spacing-5xl) var(--spacing-lg);
+}
+
+.todo-list-table tbody tr.no-data:hover {
+  background: transparent;
 }
 
 .todo-list-table .list-name {
   font-weight: 500;
-  color: #1f2937;
+  color: var(--color-text-primary);
 }
 
 .todo-list-table .actions-cell {
   text-align: center;
-  width: 80px;
+  width: var(--spacing-5xl);
 }
