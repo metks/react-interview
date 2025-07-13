@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect, useCallback } from "react";
 import Layout from "../../../core/components/layout/Layout";
 import { useTodoList, useUpdateTodoList } from "../../../core/api/hooks";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import IconButton from "../../../core/components/inputs/icon-button/IconButton";
 import { LeftArrowIcon } from "../../../assets/icons";
 import ListItem from "../components/list-item/LIstItem";
+import { wsService } from "../../../core/api/websocket";
 
 const TodoListDetailScreen = (): ReactNode => {
   const { id } = useParams<{ id: string }>();
@@ -19,11 +20,104 @@ const TodoListDetailScreen = (): ReactNode => {
   }
 
   const { data: todoList, execute: refetchTodoList } = useTodoList(Number(id));
+
+  // Memoizar refetchTodoList para evitar recreación en cada render
+  const memoizedRefetch = useCallback(() => {
+    console.log("🔄 REFETCH: memoizedRefetch called");
+    refetchTodoList();
+  }, [refetchTodoList]);
+
   const { mutate: updateTodoList } = useUpdateTodoList({
     onSuccess: () => {
-      refetchTodoList();
+      console.log("🔄 REFETCH: updateTodoList onSuccess callback triggered");
+      memoizedRefetch();
     },
   });
+
+  // WebSocket setup
+  useEffect(() => {
+    // Conectar a WebSocket
+    wsService.connect();
+
+    // Wrapper para debuggear refetches
+    const debugRefetch = (source: string) => {
+      console.log(`🔄 REFETCH triggered by: ${source}`);
+      memoizedRefetch();
+    };
+
+    // Suscribirse a actualizaciones de esta lista específica
+    const unsubscribeItemUpdate = wsService.subscribe(
+      "todo-item-updated",
+      (data: unknown) => {
+        console.log("🎯 RECEIVED todo-item-updated event:", data);
+        const eventData = data as {
+          listId: string | number;
+          itemId: string;
+          completed: boolean;
+        };
+        console.log(
+          "Event data listId:",
+          eventData.listId,
+          "type:",
+          typeof eventData.listId
+        );
+        console.log("Current list ID:", id, "type:", typeof id);
+
+        // Comparar como strings para evitar problemas de tipo
+        const eventListId = String(eventData.listId);
+        const currentListId = String(id);
+
+        if (eventListId === currentListId) {
+          console.log("✅ Event matches current list ID, triggering refetch");
+          debugRefetch("WebSocket item-updated");
+        } else {
+          console.log("❌ Event for different list, ignoring");
+        }
+      }
+    );
+
+    // Suscribirse a actualizaciones de la lista (nuevos items)
+    const unsubscribeListUpdate = wsService.subscribe(
+      "todo-list-updated",
+      (data: unknown) => {
+        console.log("🎯 RECEIVED todo-list-updated event:", data);
+        const eventData = data as {
+          listId: string | number;
+          type: string;
+          itemId?: string;
+          timestamp?: string;
+          data?: unknown;
+        };
+        console.log(
+          "Event data listId:",
+          eventData.listId,
+          "type:",
+          typeof eventData.listId
+        );
+        console.log("Current list ID:", id, "type:", typeof id);
+
+        // Comparar como strings para evitar problemas de tipo
+        const eventListId = String(eventData.listId);
+        const currentListId = String(id);
+
+        if (eventListId === currentListId) {
+          console.log("✅ Event matches current list ID, triggering refetch");
+          debugRefetch("WebSocket list-updated");
+        } else {
+          console.log("❌ Event for different list, ignoring");
+        }
+      }
+    );
+
+    // Unirse a la "sala" de esta lista
+    wsService.joinList(Number(id));
+
+    return () => {
+      wsService.leaveList(Number(id));
+      unsubscribeItemUpdate();
+      unsubscribeListUpdate();
+    };
+  }, [id, memoizedRefetch]);
 
   if (!todoList) {
     return <Layout>Loading...</Layout>;
@@ -34,7 +128,7 @@ const TodoListDetailScreen = (): ReactNode => {
   };
 
   const handleCreateItem = (itemName: string) => {
-    const id = uuidv4();
+    const newItemId = uuidv4();
 
     updateTodoList({
       id: todoList.id,
@@ -42,15 +136,30 @@ const TodoListDetailScreen = (): ReactNode => {
         name: todoList.name,
         items: [
           ...todoList.items,
-          { id: id, name: itemName, completed: false, listId: todoList.id },
+          {
+            id: newItemId,
+            name: itemName,
+            completed: false,
+            listId: todoList.id,
+          },
         ],
       },
+    });
+
+    // Notificar a otros clientes que se agregó un nuevo item
+    wsService.emit("todo-list-updated", {
+      listId: Number(todoList.id),
+      type: "item-added",
+      itemId: newItemId,
     });
   };
 
   const handleToggleComplete = (itemId: string) => {
+    const item = todoList.items.find((item) => item.id === itemId);
+    const newCompletedState = !item?.completed;
+
     const updatedItems = todoList.items.map((item) =>
-      item.id === itemId ? { ...item, completed: !item.completed } : item
+      item.id === itemId ? { ...item, completed: newCompletedState } : item
     );
 
     updateTodoList({
@@ -60,6 +169,13 @@ const TodoListDetailScreen = (): ReactNode => {
         items: updatedItems,
       },
     });
+
+    // Notificar a otros clientes via WebSocket
+    wsService.notifyTodoItemUpdate(
+      Number(todoList.id),
+      itemId,
+      newCompletedState
+    );
   };
 
   const handleCloseModal = () => {
