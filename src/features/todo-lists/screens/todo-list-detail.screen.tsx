@@ -21,7 +21,6 @@ const TodoListDetailScreen = (): ReactNode => {
 
   const { data: todoList, execute: refetchTodoList } = useTodoList(Number(id));
 
-  // Memoizar refetchTodoList para evitar recreación en cada render
   const memoizedRefetch = useCallback(() => {
     console.log("🔄 REFETCH: memoizedRefetch called");
     refetchTodoList();
@@ -34,18 +33,14 @@ const TodoListDetailScreen = (): ReactNode => {
     },
   });
 
-  // WebSocket setup
   useEffect(() => {
-    // Conectar a WebSocket
     wsService.connect();
 
-    // Wrapper para debuggear refetches
     const debugRefetch = (source: string) => {
       console.log(`🔄 REFETCH triggered by: ${source}`);
       memoizedRefetch();
     };
 
-    // Suscribirse a actualizaciones de esta lista específica
     const unsubscribeItemUpdate = wsService.subscribe(
       "todo-item-updated",
       (data: unknown) => {
@@ -55,15 +50,7 @@ const TodoListDetailScreen = (): ReactNode => {
           itemId: string;
           completed: boolean;
         };
-        console.log(
-          "Event data listId:",
-          eventData.listId,
-          "type:",
-          typeof eventData.listId
-        );
-        console.log("Current list ID:", id, "type:", typeof id);
 
-        // Comparar como strings para evitar problemas de tipo
         const eventListId = String(eventData.listId);
         const currentListId = String(id);
 
@@ -76,7 +63,6 @@ const TodoListDetailScreen = (): ReactNode => {
       }
     );
 
-    // Suscribirse a actualizaciones de la lista (nuevos items)
     const unsubscribeListUpdate = wsService.subscribe(
       "todo-list-updated",
       (data: unknown) => {
@@ -88,15 +74,7 @@ const TodoListDetailScreen = (): ReactNode => {
           timestamp?: string;
           data?: unknown;
         };
-        console.log(
-          "Event data listId:",
-          eventData.listId,
-          "type:",
-          typeof eventData.listId
-        );
-        console.log("Current list ID:", id, "type:", typeof id);
 
-        // Comparar como strings para evitar problemas de tipo
         const eventListId = String(eventData.listId);
         const currentListId = String(id);
 
@@ -109,7 +87,6 @@ const TodoListDetailScreen = (): ReactNode => {
       }
     );
 
-    // Unirse a la "sala" de esta lista
     wsService.joinList(Number(id));
 
     return () => {
@@ -146,7 +123,6 @@ const TodoListDetailScreen = (): ReactNode => {
       },
     });
 
-    // Notificar a otros clientes que se agregó un nuevo item
     wsService.emit("todo-list-updated", {
       listId: Number(todoList.id),
       type: "item-added",
@@ -170,7 +146,6 @@ const TodoListDetailScreen = (): ReactNode => {
       },
     });
 
-    // Notificar a otros clientes via WebSocket
     wsService.notifyTodoItemUpdate(
       Number(todoList.id),
       itemId,
